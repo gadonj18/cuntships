@@ -6,6 +6,8 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.position = new Vector3(ship.transform.position.x, ship.transform.position.y + 1.5f, ship.transform.position.z - 20f);
+		if (ship.GetComponent<ShipController> ().alive) {
+			this.transform.position = new Vector3 (ship.transform.position.x, ship.transform.position.y + 1.5f, ship.transform.position.z - 20f);
+		}
 	}
 }
