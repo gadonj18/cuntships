@@ -3,7 +3,6 @@ using System.Collections;
 
 public class GameLogic : MonoBehaviour {
 	public GameObject ship;
-	public GameObject Detonation;
 	private Rigidbody rb;
 	private Vector3 UpDir;
 	private bool UpPressed = false;
