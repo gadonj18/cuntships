@@ -31,12 +31,14 @@ public class GameLogic : MonoBehaviour {
 
 	void FixedUpdate () {
 		if(UpPressed) {
-			rb.AddForce(ship.transform.forward * 15f);
+			rb.AddForce(ship.transform.forward * 10f);
 		}
 		if(LeftPressed) {
-			rb.AddRelativeTorque(new Vector3(0f, -1f, 0f));
+			//rb.AddRelativeTorque(new Vector3(0f, -1f, 0f));
+			ship.transform.Rotate(new Vector3(0f, -100f * Time.deltaTime, 0f));
 		} else if(RightPressed) {
-			rb.AddRelativeTorque(new Vector3(0f, 1f, 0f));
+			//rb.AddRelativeTorque(new Vector3(0f, 1f, 0f));
+			ship.transform.Rotate(new Vector3(0f, 100f * Time.deltaTime, 0f));
 		}
 	}
 }
