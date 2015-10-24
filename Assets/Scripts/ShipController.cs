@@ -6,6 +6,7 @@ public class ShipController : MonoBehaviour {
 	public bool alive = true;
 
 	void OnCollisionEnter(Collision col) {
+		Debug.Log ("Test");
 		if (alive) {
 			if (col.collider.gameObject.GetComponent<CapsuleController> ()) {
 				GameObject.Destroy(col.collider.gameObject);
