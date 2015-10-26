@@ -57,6 +57,7 @@ public class GameLogic : MonoBehaviour
             outcomeUI.text = "You lose! ...bitch";
             outcomeUI.enabled = true;
             state = States.Lost;
+            StartCoroutine("Restart");
         }
     }
 
@@ -81,9 +82,20 @@ public class GameLogic : MonoBehaviour
 
     private void WinGame()
     {
-        started = false;
-        outcomeUI.text = "You win! ...bitch";
-        outcomeUI.enabled = true;
-        state = States.Won;
+        if (state == States.Playing)
+        {
+            started = false;
+            outcomeUI.text = "You win! ...bitch";
+            outcomeUI.enabled = true;
+            state = States.Won;
+            StartCoroutine("Restart");
+        }
+    }
+
+
+    private IEnumerator Restart()
+    {
+        yield return new WaitForSeconds(3f);
+        Application.LoadLevel(0);
     }
 }
