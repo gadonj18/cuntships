@@ -72,6 +72,7 @@ public class ShipController : MonoBehaviour {
             RightPressed = true;
         }
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
+        rb.angularVelocity = Vector3.zero;
     }
 
     void FixedUpdate()
