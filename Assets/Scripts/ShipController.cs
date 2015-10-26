@@ -46,6 +46,7 @@ public class ShipController : MonoBehaviour {
 				foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
 					renderer.enabled = false;
 				}
+                gameLogic.Alive = false;
                 gameLogic.Crash();
 			}
 		}

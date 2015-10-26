@@ -8,6 +8,7 @@ public class GameLogic : MonoBehaviour
     public bool Alive
     {
         get { return alive; }
+        set { alive = value; }
     }
     private bool started = false;
     public bool Started
@@ -20,13 +21,21 @@ public class GameLogic : MonoBehaviour
     {
         get { return score; }
     }
+    private int numCapsules;
     private Text scoreUI;
     private Text timeUI;
+    private Text outcomeUI;
+    private enum States { Starting, Playing, Won, Lost };
+    private States state;
 
     void Start()
     {
         scoreUI = GameObject.Find("Canvas/Score").GetComponent<Text>();
         timeUI = GameObject.Find("Canvas/Time").GetComponent<Text>();
+        outcomeUI = GameObject.Find("Canvas/Outcome").GetComponent<Text>();
+        outcomeUI.enabled = false;
+        numCapsules = GameObject.Find("Capsules").transform.childCount;
+        state = States.Starting;
     }
 
     void Update()
@@ -42,17 +51,39 @@ public class GameLogic : MonoBehaviour
 
     public void Crash()
     {
-        alive = false;
+        if (state == States.Playing)
+        {
+            alive = false;
+            outcomeUI.text = "You lose! ...bitch";
+            outcomeUI.enabled = true;
+            state = States.Lost;
+        }
     }
 
     public void GetCapsule()
     {
         score++;
+        numCapsules--;
+        if(numCapsules == 0)
+        {
+            WinGame();
+        }
     }
-    
+
     public void StartGame()
     {
-        started = true;
-        timeStart = Time.fixedTime;
+        if (state == States.Starting) {
+            started = true;
+            timeStart = Time.fixedTime;
+            state = States.Playing;
+       }
+    }
+
+    private void WinGame()
+    {
+        started = false;
+        outcomeUI.text = "You win! ...bitch";
+        outcomeUI.enabled = true;
+        state = States.Won;
     }
 }
