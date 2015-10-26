@@ -9,13 +9,13 @@ public class ShipController : MonoBehaviour {
     private bool LeftPressed = false;
     private bool RightPressed = false;
     public GameObject Detonation;
-	public bool alive = true;
-	private int score = 0;
+	
     public AudioClip CapsuleSound;
     public AudioClip DetonationSound;
     private AudioSource Engine;
     private AudioSource Effects;
     private GameObject flame;
+    public GameLogic gameLogic;
 
     void Start()  {
         AudioSource[] sources = this.GetComponents<AudioSource>();
@@ -26,18 +26,18 @@ public class ShipController : MonoBehaviour {
     }
 
 	void OnTriggerEnter(Collider col) {
-		if (alive) {
+		if (gameLogic.Alive) {
 			if (col.GetComponent<Collider>().gameObject.GetComponent<CapsuleController> ())  {
                 Effects.clip = CapsuleSound;
                 Effects.Play();
                 GameObject.Destroy (col.GetComponent<Collider>().gameObject);
-				score++;
+                gameLogic.GetCapsule();
 			}
 		}
 	}
 
 	void OnCollisionEnter(Collision col) {
-		if (alive) {
+		if (gameLogic.Alive) {
 			if (col.collider.gameObject.name != "Floor") {
 				GameObject detonation = Instantiate (Detonation);
                 Effects.clip = DetonationSound;
@@ -46,7 +46,7 @@ public class ShipController : MonoBehaviour {
 				foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
 					renderer.enabled = false;
 				}
-				alive = false;
+                gameLogic.Crash();
 			}
 		}
 	}
@@ -57,6 +57,7 @@ public class ShipController : MonoBehaviour {
         UpPressed = false;
         if (Input.GetKey("w"))
         {
+            if (!gameLogic.Started) gameLogic.StartGame();
             UpPressed = true;
         }
         LeftPressed = false;
@@ -70,8 +71,6 @@ public class ShipController : MonoBehaviour {
             RightPressed = true;
         }
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
-
-        GameObject.Find("Canvas/Score").GetComponent<Text>().text = "Score: " + score.ToString();
     }
 
     void FixedUpdate()
