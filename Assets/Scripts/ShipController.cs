@@ -38,7 +38,7 @@ public class ShipController : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col) {
 		if (gameLogic.Alive) {
-			if (col.collider.gameObject.name != "Floor") {
+			if (col.collider.gameObject.transform.parent.name != "LandingPads") {
 				GameObject detonation = Instantiate (Detonation);
                 Effects.clip = DetonationSound;
                 Effects.Play();
@@ -77,13 +77,12 @@ public class ShipController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (UpPressed)
+        if (UpPressed && gameLogic.Alive)
         {
             rb.AddForce(this.transform.forward * 10f);
             flame.GetComponent<ParticleSystem>().enableEmission = true;
             if(!Engine.isPlaying) Engine.Play();
-        } else
-        {
+        } else {
             Engine.Stop();
             flame.GetComponent<ParticleSystem>().enableEmission = false;
         }

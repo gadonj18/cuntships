@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using SimpleJSON;
+using System.Collections.Generic;
 
 public class GameLogic : MonoBehaviour
 {
@@ -34,7 +36,7 @@ public class GameLogic : MonoBehaviour
         timeUI = GameObject.Find("Canvas/Time").GetComponent<Text>();
         outcomeUI = GameObject.Find("Canvas/Outcome").GetComponent<Text>();
         outcomeUI.enabled = false;
-        numCapsules = GameObject.Find("Capsules").transform.childCount;
+        numCapsules = GameObject.Find("Level/Capsules").transform.childCount;
         state = States.Starting;
     }
 
