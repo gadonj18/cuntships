@@ -27,11 +27,10 @@ public class ShipController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col) {
 		if (gameLogic.Alive) {
-			if (col.GetComponent<Collider>().gameObject.GetComponent<CapsuleController> ())  {
+			if (col.gameObject.GetComponent<CapsuleController> ())  {
                 Effects.clip = CapsuleSound;
                 Effects.Play();
-                GameObject.Destroy (col.GetComponent<Collider>().gameObject);
-                gameLogic.GetCapsule();
+                gameLogic.GetCapsule(col.gameObject);
 			}
 		}
 	}
@@ -43,10 +42,6 @@ public class ShipController : MonoBehaviour {
                 Effects.clip = DetonationSound;
                 Effects.Play();
 				detonation.transform.position = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z);
-				foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
-					renderer.enabled = false;
-				}
-                gameLogic.Alive = false;
                 gameLogic.Crash();
 			}
 		}
